@@ -6,7 +6,7 @@
 set -e
 set -o xtrace
 
-dnf install -y python-devel libxml2-devel libxslt-devel python-setuptools \
+yum install -y python-devel libxml2-devel libxslt-devel python-setuptools \
     python-sqlalchemy python-lxml \
     python-routes python-eventlet python-webob \
     python-kombu python-paste-deploy python-paste python-netaddr \

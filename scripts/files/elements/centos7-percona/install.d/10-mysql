@@ -13,4 +13,4 @@ set -o xtrace
 if [[ $BRANCH_OVERRIDE == "stable/kilo" || $BRANCH_OVERRIDE == "stable/liberty" ]]; then
     PXB_VERSION_OVERRIDE="-22"
 fi
-dnf -y install percona-toolkit Percona-Server-shared-55 Percona-Server-server-55 Percona-Server-test-55 Percona-Server-client-55 percona-xtrabackup${PXB_VERSION_OVERRIDE}
+yum -y install percona-toolkit Percona-Server-shared-55 Percona-Server-server-55 Percona-Server-test-55 Percona-Server-client-55 percona-xtrabackup${PXB_VERSION_OVERRIDE}

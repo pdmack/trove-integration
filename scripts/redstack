@@ -115,7 +115,7 @@ fi
 # set up respective package managers
 if is_fedora; then
     PKG_INSTALL_OPTS=""
-    PKG_MGR=dnf
+    PKG_MGR=yum
     PKG_GET_ARGS="-y"
 else
     PKG_INSTALL_OPTS="DEBIAN_FRONTEND=noninteractive"
