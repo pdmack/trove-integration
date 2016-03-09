@@ -3,7 +3,8 @@
 # CONTEXT: GUEST during CONSTRUCTION as ROOT
 # PURPOSE: Install controller base required packages
 
-set -ex
+set -e
+set -o xtrace
 
-dnf -y install redis
-service redis start
+yum -y install percona-xtrabackup
+

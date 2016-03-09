@@ -21,4 +21,4 @@ exit \$?
 
 _EOF_
 
-dnf -y install mongodb-server
+yum -y install mongodb-server

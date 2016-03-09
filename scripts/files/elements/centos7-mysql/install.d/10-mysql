@@ -6,8 +6,8 @@
 set -e
 set -o xtrace
 
-dnf -y install https://repo.mysql.com/mysql-community-release-fc22.rpm
-dnf -y install mysql-community-server
+yum -y install https://repo.mysql.com/mysql-community-release-el7.rpm
+yum -y install mysql-community-server
 
 # move the config dir for now but leave /etc/my.cnf alone
 # ln -s creates problems for the systemd script
