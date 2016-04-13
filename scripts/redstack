@@ -518,11 +518,13 @@ function set_bin_path() {
     fi
 }
 
-function set_mysql_pkg() {
+function set_default_pkg() {
     if is_fedora; then
        MYSQL_PKG="mysql-community-server"
+       PGSQL_PKG="postgresql93-server"
     else
        MYSQL_PKG="mysql-server-5.6"
+       PGSQL_PKG="postgresql-9.3"
     fi
 }
 
@@ -533,8 +535,8 @@ function cmd_set_datastore() {
     # rd_manage datastore_update <datastore_name> <default_version>
     rd_manage datastore_update "$DATASTORE_TYPE" ""
     PACKAGES=${PACKAGES:-""}
+    set_default_pkg
     if [ "$DATASTORE_TYPE" == "mysql" ]; then
-        set_mysql_pkg
         PACKAGES=${PACKAGES:-$MYSQL_PKG}
         VERSION="5.6"
     elif [ "$DATASTORE_TYPE" == "percona" ]; then
@@ -559,7 +561,7 @@ function cmd_set_datastore() {
         PACKAGES=${PACKAGES:-"couchbase-server"}
         VERSION="2.2.0"
     elif [ "$DATASTORE_TYPE" == "postgresql" ]; then
-        PACKAGES=${PACKAGES:-"postgresql-9.3"}
+        PACKAGES=${PACKAGES:-$PGSQL_PKG}
         VERSION="9.3"
     elif [ "$DATASTORE_TYPE" == "couchdb" ]; then
         PACKAGES=${PACKAGES:-"couchdb"}
