@@ -5,5 +5,15 @@
 
 set -ex
 
-yum -y install redis
-service redis start
+# NOTE: unofficial 3.0 version from Remi Collet; EPEL is still at 2.8.19
+# devel and test only
+yum -y install http://mirrors.mediatemple.net/remi/enterprise/7/remi/x86_64/redis-3.0.7-2.el7.remi.x86_64.rpm
+systemctl start redis
+
+# Install Python driver for Redis ('redis-py').
+pip install redis
+
+# By default, redis-py will attempt to use the HiredisParser if installed.
+# Using Hiredis can provide up to a 10x speed improvement in parsing responses
+# from the Redis server.
+pip install hiredis
