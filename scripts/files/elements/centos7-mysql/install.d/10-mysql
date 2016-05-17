@@ -14,3 +14,7 @@ yum -y install mysql-community-server
 mkdir /etc/mysql
 mv /etc/my.cnf.d /etc/mysql/conf.d
 chown -R mysql:mysql /etc/mysql
+
+# another package-specific adjustment
+mkdir -p /var/lib/mysql/data
+sed -i "s|datadir=/var/lib/mysql|datadir=/var/lib/mysql/data|" /etc/my.cnf
