@@ -6,20 +6,22 @@
 set -e
 set -o xtrace
 
-cat > "/etc/rc.local" << _EOF_
+cat > "/etc/rc.d/rc.local" << _EOF_
 # Make sure to disable Linux kernel feature transparent huge pages,
 # it will affect greatly both memory usage and latency in a negative way.
 # See: http://docs.mongodb.org/manual/tutorial/transparent-huge-pages/
-if test -f /sys/kernel/mm/redhat_transparent_hugepage/defrag; then
-  echo never > /sys/kernel/mm/redhat_transparent_hugepage/defrag
+if test -f /sys/kernel/mm/transparent_hugepage/defrag; then
+  echo never > /sys/kernel/mm/transparent_hugepage/defrag
 fi
-if test -f /sys/kernel/mm/redhat_transparent_hugepage/enabled; then
-  echo never > /sys/kernel/mm/redhat_transparent_hugepage/enabled
+if test -f /sys/kernel/mm/transparent_hugepage/enabled; then
+  echo never > /sys/kernel/mm/transparent_hugepage/enabled
 fi
 
 exit \$?
 
 _EOF_
+
+chmod a+x /etc/rc.d/rc.local
 
 wget --directory-prefix=/etc/yum.repos.d https://repo.mongodb.org/yum/redhat/mongodb-org.repo
 
