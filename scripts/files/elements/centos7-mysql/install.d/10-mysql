@@ -6,6 +6,9 @@
 set -e
 set -o xtrace
 
+# avoid some dep conflicts here
+yum -y remove mariadb-libs mariadb-server
+
 yum -y install https://repo.mysql.com/mysql-community-release-el7.rpm
 yum -y install mysql-community-server
 
@@ -14,7 +17,10 @@ yum -y install mysql-community-server
 mkdir /etc/mysql
 mv /etc/my.cnf.d /etc/mysql/conf.d
 chown -R mysql:mysql /etc/mysql
+chcon -Rv --type=mysqld_etc_t /etc/mysql/conf.d
 
-# another package-specific adjustment
-mkdir -p /var/lib/mysql/data
-sed -i "s|datadir=/var/lib/mysql|datadir=/var/lib/mysql/data|" /etc/my.cnf
+# not all mysql vendor packages add the
+# includedir line to ALL its default confs;
+# needs to be there for the config swaps
+sed -i '/!includedir[ \t]*\/etc\/my.cnf.d/d' /etc/my.cnf
+sed -i '$ a !includedir \/etc\/mysql\/conf.d' /etc/my.cnf

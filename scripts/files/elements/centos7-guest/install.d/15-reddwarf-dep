@@ -11,7 +11,7 @@ yum install -y python-devel libxml2-devel libxslt-devel python-setuptools \
     python-routes python-eventlet python-webob \
     python-kombu python-paste-deploy python-paste python-netaddr \
     python-httplib2 python-iso8601 python-pip MySQL-python \
-    python-migrate python-anyjson gcc python-pexpect
+    python-migrate python-anyjson gcc pexpect
 
 # pick up the requirements file left for us by
 # extra-data.d/15-reddwarf-dep
