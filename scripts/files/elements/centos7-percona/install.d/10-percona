@@ -20,9 +20,8 @@ if [[ $BRANCH_OVERRIDE == "stable/kilo" || $BRANCH_OVERRIDE == "stable/liberty" 
     PXB_VERSION_OVERRIDE="-22"
 fi
 
-# we'll install the config first and modify that
-# for the locations Trove expects
-yum -y install Percona-Server-shared-56
+yum -y install Percona-Server-server-56 Percona-Server-client-56 \
+	Percona-Server-test-56 percona-xtrabackup${PXB_VERSION_OVERRIDE}
 
 # not all mysql vendor packages add the
 # includedir line to ALL its default confs;
@@ -33,18 +32,6 @@ sed -i '$ a !includedir \/etc\/mysql\/conf.d' /etc/my.cnf
 # make conf dir
 mkdir -p /etc/mysql/conf.d
 chcon -Rv --type=mysqld_etc_t /etc/mysql/conf.d
-
-groupadd -r mysql
-useradd -M -r -d /var/lib/mysql -s /bin/bash -c "MySQL server" \
-  -g mysql mysql
-usermod -g mysql mysql
-
-yum -y install Percona-Server-client-56 Percona-Server-test-56 percona-xtrabackup${PXB_VERSION_OVERRIDE}
-
-# now install server using rpm but don't let
-# the server post scriptlet run
-rpm -ivh --nopost `yumdownloader -q --urls Percona-Server-server-56`
-/usr/bin/mysql_install_db --rpm --user=mysql --datadir=/var/lib/mysql
 
 # sock file needs to be written here too
 # but pre script sets mysql:mysql

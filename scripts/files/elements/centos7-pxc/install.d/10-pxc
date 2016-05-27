@@ -21,37 +21,27 @@ if [[ $BRANCH_OVERRIDE == "stable/kilo" || $BRANCH_OVERRIDE == "stable/liberty" 
 fi
 
 yum -y install socat
+yum -y install Percona-XtraDB-Cluster-server-56 Percona-XtraDB-Cluster-client-56 \
+	Percona-XtraDB-Cluster-galera-25 percona-xtrabackup${PXB_VERSION_OVERRIDE}
 
-# we'll install the config first and modify that
-# for the locations Trove expects
-yum -y install Percona-XtraDB-Cluster-shared-56
-
-sed -i 's|!includedir[ \t]*/etc/my.cnf.d|!includedir /etc/mysql/conf.d|' /etc/my.cnf
+# not all mysql vendor packages add the
+# includedir line to ALL its default confs;
+# needs to be there for the config swaps
+sed -i '/!includedir[ \t]*\/etc\/my.cnf.d/d' /etc/my.cnf
+sed -i '$ a !includedir \/etc\/mysql\/conf.d' /etc/my.cnf
 
 # move conf dir
 mkdir /etc/mysql
 mv /etc/my.cnf.d /etc/mysql/conf.d
 chcon -Rv --type=mysqld_etc_t /etc/mysql
 
-groupadd -r mysql
-useradd -M -r -d /var/lib/mysql -s /bin/bash -c "MySQL server" \
-  -g mysql mysql
-usermod -g mysql mysql
-
-yum -y install Percona-XtraDB-Cluster-client-56 Percona-XtraDB-Cluster-galera-25 \
-	 percona-xtrabackup${PXB_VERSION_OVERRIDE}
-
 # cluster template unfortunately has an Ubuntu path
 ln -s /usr/lib64/galera3/libgalera_smm.so /usr/lib/libgalera_smm.so
-
-# now install server using rpm but don't let
-# the server post scriptlet run
-rpm -ivh --nopost `yumdownloader -q --urls Percona-XtraDB-Cluster-server-56`
-/usr/bin/mysql_install_db --rpm --user=mysql --datadir=/var/lib/mysql
 
 # sock file needs to be written here too
 # but pre script sets mysql:mysql
 chown -R mysql:root /var/lib/mysql
 
 # ensure Trove manages the boostrap stuff (new wsrep cluster)
+systemctl disable mysql@bootstrap
 systemctl disable mysql
