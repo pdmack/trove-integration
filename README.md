@@ -185,18 +185,19 @@ By far, the most common problems for a new OpenStack developer in setting up a w
    
 3. If running trove-integration inside a VM, make sure that the hypervisor supports promiscuous mode for the NAT network adapter it provides to the host VM
 4. If running neutron instead of the default nova-network, make sure that the br-ex adapter created by neutron is configured with the gateway IP that was attached to your host adapter connected to the external public network. This will provide connectivity for the floating IP network
+
 ***
 ### VMware Fusion 5 speed improvement
 Running Ubuntu with KVM or Qemu can be extremely slow without certain optimizations. The following are some VMware settings that can improve performance and may also apply to other virtualization platforms.
 
-1. Shutdown the Ubuntu VM.
-2. Go to VM Settings -> Processors & Memory -> Advanced Options.
+1. Shutdown the Ubuntu VM
+2. Go to VM Settings -> Processors & Memory -> Advanced Options
    Check the "Enable hypervisor applications in this virtual machine"
-3. Go to VM Settings -> Advanced.
+3. Go to VM Settings -> Advanced
    Set the "Troubleshooting" option to "None"
-4. After setting these create a snapshot so that in cases where things break down you can revert to a clean snapshot.
+4. After setting these create a snapshot so that in cases where things break down you can revert to a clean snapshot
 5. Boot up the VM and run the `./redstack install`
-6. To verify that KVM is setup properly after the devstack installation you can run these commands.
+6. To verify that KVM is setup properly after the devstack installation you can run these commands
 
 ```
 ubuntu@ubuntu:~$ kvm-ok
