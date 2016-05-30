@@ -78,14 +78,14 @@ Num Name
 
 ..... (full list omitted)
 
-20. c-vol
-21. h-eng
-22. h-api
-23. h-api-cfn
-24. h-api-cw
-25. tr-api
-26. tr-tmgr
-27. tr-cond
+20 c-vol
+21 h-eng
+22 h-api
+23 h-api-cfn
+24 h-api-cw
+25 tr-api
+26 tr-tmgr
+27 tr-cond
 
 Alternatively, to go directly to a specific screen window
 
