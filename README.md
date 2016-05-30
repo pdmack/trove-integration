@@ -182,9 +182,7 @@ By far, the most common problems for a new OpenStack developer in setting up a w
 
 1. If the Trove guest agent inside the guest VM can't contact the Trove control plane message bus, make sure that a firewall like iptables is not blocking AMQP traffic on the host (port 5672)
 2. If the Trove control plane can't reach your guest VM at all you may have to masquerade traffic using:
-   
-   ```iptables -t nat -A POSTROUTING -o <name_of_adapter> -j MASQUERADE```
-   
+   `iptables -t nat -A POSTROUTING -o <name_of_adapter> -j MASQUERADE`
 3. If running trove-integration inside a VM, make sure that the hypervisor supports promiscuous mode for the NAT network adapter it provides to the host VM
 4. If running neutron instead of the default nova-network, make sure that the br-ex adapter created by neutron is configured with the gateway IP that was attached to your host adapter connected to the external public network. This will provide connectivity for the floating IP network
 
