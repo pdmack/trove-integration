@@ -190,18 +190,14 @@ By far, the most common problems for a new OpenStack developer in setting up a w
 Running Ubuntu with KVM or Qemu can be extremely slow without certain optimizations. The following are some VMware settings that can improve performance and may also apply to other virtualization platforms.
 
 1. Shutdown the Ubuntu VM.
-
 2. Go to VM Settings -> Processors & Memory -> Advanced Options.
    Check the "Enable hypervisor applications in this virtual machine"
-
 3. Go to VM Settings -> Advanced.
    Set the "Troubleshooting" option to "None"
-
 4. After setting these create a snapshot so that in cases where things break down you can revert to a clean snapshot.
-
 5. Boot up the VM and run the `./redstack install`
-
 6. To verify that KVM is setup properly after the devstack installation you can run these commands.
+
 ```
 ubuntu@ubuntu:~$ kvm-ok
 INFO: /dev/kvm exists
