@@ -177,6 +177,7 @@ You can also specify the TESTS_USE_INSTANCE_ID environment variable to have the 
 ***
 ### Troubleshooting
 By far, the most common problems for a new OpenStack developer in setting up a working test environment relate to networking. Some tips to try and perhaps research further:
+
 1. If the Trove guest agent inside the guest VM can't contact the Trove control plane message bus, make sure that a firewall like iptables is not blocking AMQP traffic on the host (port 5672).
 2. If the Trove control plane can't reach your guest VM at all you may have to masquerade traffic using:
    ```iptables -t nat -A POSTROUTING -o <name_of_adapter> -j MASQUERADE```
